@@ -1,4 +1,10 @@
 
+using MakeUpApp.Data;
+using MakeUpApp.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System;
+
 namespace MakeUpApp
 {
     public class Program
@@ -6,6 +12,14 @@ namespace MakeUpApp
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext<MakeupContext>(options => 
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+            );
+
+            builder.Services.AddIdentity<User, IdentityRole>()
+            .AddEntityFrameworkStores<MakeupContext>()
+            .AddDefaultTokenProviders();
 
             // Add services to the container.
 
