@@ -1,6 +1,6 @@
-﻿namespace MakeUpApp.Models.DTOs
+﻿namespace MakeUpApp.Models.DTOs.ProductDTOs
 {
-    public class ProductCreateDTO
+    public class ProductDTO
     {
         public required string Name { get; set; }
         public string? Description { get; set; }
