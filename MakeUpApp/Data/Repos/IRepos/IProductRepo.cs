@@ -8,7 +8,7 @@ namespace MakeUpApp.Data.Repos.IRepos
         Task<Product?> GetProductByIdAsync(int id);
         Task<IEnumerable<Product>> GetAllProductsAsync();
 
-        Task<IEnumerable<Product>> GetUserProductsAsync(int id);
+        Task<IEnumerable<Product>> GetUserProductsAsync(string id);
         Task<bool> UpdateProductAsync(Product updatedProduct);
         Task<bool> DeleteProductAsync(int id);
             

@@ -37,17 +37,17 @@ namespace MakeUpApp.Data.Repos
                 if (found != null)
                 {
                     _context.Remove(found);
-                } else
-                {
-                    throw new ApplicationException("Product not found");
                 }
-
-                    await _context.SaveChangesAsync();
+                else if (found == null)
+                {
+                    return false;
+                }
+              
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex) 
             {
-                return false;
                 throw new ApplicationException("Database error at Repo level", ex);     
             }   
         }
@@ -78,12 +78,12 @@ namespace MakeUpApp.Data.Repos
             }
         }
 
-        public async Task<IEnumerable<Product>> GetUserProductsAsync(int id)
+        public async Task<IEnumerable<Product>> GetUserProductsAsync(string id)
         {
             try
             {
                 var foundList = await _context.Products
-                    .Where(p => p.Id == id)
+                    .Where(p => p.UserId == id)
                     .ToListAsync();
 
                 return foundList;
