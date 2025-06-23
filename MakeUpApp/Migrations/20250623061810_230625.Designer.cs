@@ -4,6 +4,7 @@ using MakeUpApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MakeUpApp.Migrations
 {
     [DbContext(typeof(MakeupContext))]
-    partial class MakeupContextModelSnapshot : ModelSnapshot
+    [Migration("20250623061810_230625")]
+    partial class _230625
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,7 +46,7 @@ namespace MakeUpApp.Migrations
                     b.Property<int>("PAO")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductTypeId")
+                    b.Property<int?>("ProductTypeid")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -51,7 +54,7 @@ namespace MakeUpApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductTypeId");
+                    b.HasIndex("ProductTypeid");
 
                     b.HasIndex("UserId");
 
@@ -60,80 +63,80 @@ namespace MakeUpApp.Migrations
 
             modelBuilder.Entity("MakeUpApp.Models.ProductType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<string>("Name")
+                    b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.ToTable("ProductTypes");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            Name = "Lip Products"
+                            id = 1,
+                            name = "Lip Products"
                         },
                         new
                         {
-                            Id = 2,
-                            Name = "Day Cream"
+                            id = 2,
+                            name = "Day Cream"
                         },
                         new
                         {
-                            Id = 3,
-                            Name = "Blush"
+                            id = 3,
+                            name = "Blush"
                         },
                         new
                         {
-                            Id = 4,
-                            Name = "Face Pallets"
+                            id = 4,
+                            name = "Face Pallets"
                         },
                         new
                         {
-                            Id = 5,
-                            Name = "Powder Base"
+                            id = 5,
+                            name = "Powder Base"
                         },
                         new
                         {
-                            Id = 6,
-                            Name = "Random Cream"
+                            id = 6,
+                            name = "Random Cream"
                         },
                         new
                         {
-                            Id = 7,
-                            Name = "Night Cream"
+                            id = 7,
+                            name = "Night Cream"
                         },
                         new
                         {
-                            Id = 8,
-                            Name = "Cleansers"
+                            id = 8,
+                            name = "Cleansers"
                         },
                         new
                         {
-                            Id = 9,
-                            Name = "Hair"
+                            id = 9,
+                            name = "Hair"
                         },
                         new
                         {
-                            Id = 10,
-                            Name = "Highlighter"
+                            id = 10,
+                            name = "Highlighter"
                         },
                         new
                         {
-                            Id = 11,
-                            Name = "Serum"
+                            id = 11,
+                            name = "Serum"
                         },
                         new
                         {
-                            Id = 12,
-                            Name = "Base"
+                            id = 12,
+                            name = "Base"
                         });
                 });
 
@@ -346,8 +349,8 @@ namespace MakeUpApp.Migrations
             modelBuilder.Entity("MakeUpApp.Models.Product", b =>
                 {
                     b.HasOne("MakeUpApp.Models.ProductType", "ProductType")
-                        .WithMany("Products")
-                        .HasForeignKey("ProductTypeId");
+                        .WithMany("products")
+                        .HasForeignKey("ProductTypeid");
 
                     b.HasOne("MakeUpApp.Models.User", "User")
                         .WithMany("Products")
@@ -411,7 +414,7 @@ namespace MakeUpApp.Migrations
 
             modelBuilder.Entity("MakeUpApp.Models.ProductType", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("products");
                 });
 
             modelBuilder.Entity("MakeUpApp.Models.User", b =>

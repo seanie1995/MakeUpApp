@@ -1,0 +1,18 @@
+﻿using MakeUpApp.Models.DTOs.ProductDTOs;
+using MakeUpApp.Models.ViewModels;
+
+namespace MakeUpApp.Services.IServices
+{
+    public interface IProductServices
+    {
+        Task<bool> AddProductAsync(ProductDTO product);
+        Task<ProductViewModel> GetProductByIdAsync(int id);
+
+        Task<IEnumerable<ProductViewModel>> GetAllProductsAsync();
+
+        Task<IEnumerable<ProductViewModel>> GetAllUserProductsAsync(int userId);
+        Task<bool> UpdateProductAsync (ProductDTO product);
+        Task<bool> DeleteProductAsync (int id);
+
+    }
+}

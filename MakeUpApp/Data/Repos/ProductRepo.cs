@@ -15,7 +15,6 @@ namespace MakeUpApp.Data.Repos
 
         public async Task<bool> AddProductAsync(Product product)
         {
-
             try
             {
                 await _context.Products.AddAsync(product);
@@ -27,17 +26,23 @@ namespace MakeUpApp.Data.Repos
             {
                 throw new ApplicationException("Database error at Repo level", ex);
             }
-            
         }
 
-        public async Task<bool> DeleteProductAsync(Product product)
+        public async Task<bool> DeleteProductAsync(int id)
         {
 
             try
             {
-                var found = await _context.Products.FindAsync(product.Id);
-                _context.Remove(found);
-                await _context.SaveChangesAsync();
+                var found = await _context.Products.FindAsync(id);
+                if (found != null)
+                {
+                    _context.Remove(found);
+                } else
+                {
+                    throw new ApplicationException("Product not found");
+                }
+
+                    await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex) 
@@ -51,8 +56,8 @@ namespace MakeUpApp.Data.Repos
         {    
             try
             {
-                var productList = await _context.Products.ToListAsync();
-                return productList;
+               return await _context.Products.ToListAsync();
+           
             }
             catch (Exception ex) 
             {
@@ -60,12 +65,12 @@ namespace MakeUpApp.Data.Repos
             }
         }
 
-        public async Task<Product> GetProductByIdAsync(int id)
+        public async Task<Product?> GetProductByIdAsync(int id)
         {
             try
             {
-                var found = await _context.Products.FindAsync(id);
-                return found;
+                return await _context.Products.FindAsync(id);
+               
             }
             catch (Exception ex) 
             {
@@ -87,20 +92,12 @@ namespace MakeUpApp.Data.Repos
             catch (Exception ex) { throw new ApplicationException(ex.Message, ex); }
         }
 
-        public async Task<bool> UpdateProductAsync(Product existingProduct, Product updatedProduct)
+        public async Task<bool> UpdateProductAsync(Product updatedProduct)
         {
             try
             {
-                var existing = await _context.Products.FindAsync(existingProduct.Id);
-                if (existing == null)
-                {
-                    return false;
-                }
-                existing.Description = updatedProduct.Description;
-                existing.Name = updatedProduct.Name;    
-                existing.OpenDate = updatedProduct.OpenDate;
-                existing.PAO = updatedProduct.PAO;
-
+                _context.Products.Update(updatedProduct);
+                await _context.SaveChangesAsync();
                 return true;
 
             }
