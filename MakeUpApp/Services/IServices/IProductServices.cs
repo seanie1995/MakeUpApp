@@ -10,7 +10,7 @@ namespace MakeUpApp.Services.IServices
 
         Task<IEnumerable<ProductViewModel>> GetAllProductsAsync();
 
-        Task<IEnumerable<ProductViewModel>> GetAllUserProductsAsync(int userId);
+        Task<IEnumerable<ProductViewModel>> GetAllUserProductsAsync(string userId);
         Task<bool> UpdateProductAsync (ProductDTO product);
         Task<bool> DeleteProductAsync (int id);
 

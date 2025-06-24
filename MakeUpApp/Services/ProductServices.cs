@@ -9,25 +9,30 @@ namespace MakeUpApp.Services
     public class ProductServices : IProductServices
     {
         public readonly IProductRepo _productRepo;
+        public readonly IProductTypeRepo _productTypeRepo;
 
-        public ProductServices(IProductRepo productRepo)
+        public ProductServices(IProductRepo productRepo, IProductTypeRepo productType)
         {
             _productRepo = productRepo;
+            _productTypeRepo = productType;
         }
 
-        public Task<bool> AddProductAsync(ProductDTO product)
+        public async Task<bool> AddProductAsync(ProductDTO product)
         {
+            var productType = await _productTypeRepo.GetProductTypeByIdAsync(product.ProductTypeId);
+
             var newProduct = new Product
             {
                 Name = product.Name,
                 Description = product.Description,
                 PAO = product.PAO,
                 OpenDate = product.OpenDate,
-                ProductType = product.ProductType,
+                ProductType = productType
             };
 
-            return _productRepo.AddProductAsync(newProduct);
-            
+            var result = await _productRepo.AddProductAsync(newProduct);
+
+            return result;
         }
 
         public Task<bool> DeleteProductAsync(int id)
@@ -41,6 +46,7 @@ namespace MakeUpApp.Services
 
             return result.Select(p => new ProductViewModel
             {
+                Id = p.Id,
                 Name = p.Name,
                 Description = p.Description,
                 PAO = p.PAO,
@@ -50,12 +56,13 @@ namespace MakeUpApp.Services
              );
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetAllUserProductsAsync(int userId)
+        public async Task<IEnumerable<ProductViewModel>> GetAllUserProductsAsync(string userId)
         {
             var result = await _productRepo.GetUserProductsAsync(userId);
 
             return result.Select(p => new ProductViewModel
             {
+                Id = p.Id,
                 Name = p.Name,
                 Description = p.Description,
                 PAO = p.PAO,
@@ -69,19 +76,30 @@ namespace MakeUpApp.Services
         {
             var result = await _productRepo.GetProductByIdAsync(id);
 
+            if (result == null)
+            {
+                throw new ArgumentException("Object not found");
+            }
+
             ProductViewModel newResult = new ProductViewModel
             {
+                Id = id,
                 Name = result.Name,
                 Description = result.Description,
                 PAO = result.PAO,
                 OpenDate = result.OpenDate,
                 ProductTypeName = result.ProductType.Name
             };
+
+           
+
             return newResult;
         }
 
         public async Task<bool> UpdateProductAsync(ProductDTO product)
         {
+
+            var productType = await _productTypeRepo.GetProductTypeByIdAsync(product.ProductTypeId);
 
             Product updatedProduct = new Product
             {
@@ -89,7 +107,7 @@ namespace MakeUpApp.Services
                 Description = product.Description,
                 PAO = product.PAO,
                 OpenDate = product.OpenDate,
-                ProductType = product.ProductType,
+                ProductType = productType
             };
 
             return await _productRepo.UpdateProductAsync(updatedProduct);

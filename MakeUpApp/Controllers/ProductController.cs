@@ -1,5 +1,8 @@
-﻿using MakeUpApp.Services.IServices;
+﻿using MakeUpApp.Models.DTOs.ProductDTOs;
+using MakeUpApp.Models.ViewModels;
+using MakeUpApp.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,29 +19,40 @@ namespace MakeUpApp.Controllers
             _services = services;
         }
 
-        
-        [HttpGet("{id}")]
-        public string Get(int id)
+
+        [HttpGet("GetProductById/{id}")]
+        public async Task<ProductViewModel> GetProductById(int id)
         {
-            return "value";
+            var result = await _services.GetProductByIdAsync(id);
+            return result;
+        }
+
+
+
+        [HttpPost("AddNewProduct")]
+        public async Task<bool> Post([FromBody] ProductDTO product)
+        {
+            var result = await _services.AddProductAsync(product);
+            return result;
+        }
+
+
+
+        [HttpPut("UpdateProduct")]
+        public async Task<bool> UpdateProduct([FromBody] ProductDTO product)
+        {
+            var result = await _services.UpdateProductAsync(product);
+
+            return result;
         }
 
         
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpDelete("DeleteProduct/{id}")]
+        public async Task<bool> DeleteProduct(int id)
         {
-        }
+            var result = await _services.DeleteProductAsync(id);
 
-        
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return result;
         }
     }
 }

@@ -1,6 +1,10 @@
 
 using MakeUpApp.Data;
+using MakeUpApp.Data.Repos;
+using MakeUpApp.Data.Repos.IRepos;
 using MakeUpApp.Models;
+using MakeUpApp.Services;
+using MakeUpApp.Services.IServices;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,6 +27,12 @@ namespace MakeUpApp
 
             // Add services to the container.
 
+            builder.Services.AddScoped<IProductRepo, ProductRepo>();
+            builder.Services.AddScoped<IProductTypeRepo, ProductTypeRepo>();
+            builder.Services.AddScoped<IProductServices, ProductServices>();
+            builder.Services.AddScoped<IProductTypeServices, ProductTypeServices>();
+            
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -40,7 +50,6 @@ namespace MakeUpApp
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

@@ -69,8 +69,9 @@ namespace MakeUpApp.Data.Repos
         {
             try
             {
-                return await _context.Products.FindAsync(id);
-               
+                return await _context.Products.
+                    Include(p => p.ProductType)
+                    .FirstOrDefaultAsync(p => p.Id == id);
             }
             catch (Exception ex) 
             {
