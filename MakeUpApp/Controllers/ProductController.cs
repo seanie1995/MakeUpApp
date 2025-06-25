@@ -30,7 +30,7 @@ namespace MakeUpApp.Controllers
 
 
         [HttpPost("AddNewProduct")]
-        public async Task<bool> Post([FromBody] ProductDTO product)
+        public async Task<bool> Post([FromBody] ProductCreateDTO product)
         {
             var result = await _services.AddProductAsync(product);
             return result;

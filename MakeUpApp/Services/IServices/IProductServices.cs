@@ -5,7 +5,7 @@ namespace MakeUpApp.Services.IServices
 {
     public interface IProductServices
     {
-        Task<bool> AddProductAsync(ProductDTO product);
+        Task<bool> AddProductAsync(ProductCreateDTO product);
         Task<ProductViewModel> GetProductByIdAsync(int id);
 
         Task<IEnumerable<ProductViewModel>> GetAllProductsAsync();

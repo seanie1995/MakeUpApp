@@ -1,4 +1,4 @@
-﻿using MakeUpApp.Models.DTOs.ProductDTOs;
+﻿using MakeUpApp.Models.DTOs.ProductTypeDTOs;
 using MakeUpApp.Models.ViewModels;
 using MakeUpApp.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +40,7 @@ namespace MakeUpApp.Controllers
 
         
         [HttpPost("AddNewProductType")]
-        public async Task<bool> AddNewProductType([FromBody] ProductTypeDTO product)
+        public async Task<bool> AddNewProductType([FromBody] ProductTypeCreateDTO product)
         {
             var result = await _productTypeServices.AddProductTypeAsync(product);
 

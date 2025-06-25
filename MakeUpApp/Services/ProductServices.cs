@@ -17,7 +17,7 @@ namespace MakeUpApp.Services
             _productTypeRepo = productType;
         }
 
-        public async Task<bool> AddProductAsync(ProductDTO product)
+        public async Task<bool> AddProductAsync(ProductCreateDTO product)
         {
             var productType = await _productTypeRepo.GetProductTypeByIdAsync(product.ProductTypeId);
 
@@ -90,9 +90,6 @@ namespace MakeUpApp.Services
                 OpenDate = result.OpenDate,
                 ProductTypeName = result.ProductType.Name
             };
-
-           
-
             return newResult;
         }
 
@@ -103,6 +100,7 @@ namespace MakeUpApp.Services
 
             Product updatedProduct = new Product
             {
+                Id = product.Id,
                 Name = product.Name,
                 Description = product.Description,
                 PAO = product.PAO,

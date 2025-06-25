@@ -1,4 +1,4 @@
-﻿namespace MakeUpApp.Models.DTOs.ProductDTOs
+﻿namespace MakeUpApp.Models.DTOs.ProductTypeDTOs
 {
     public class ProductTypeFetchDTO
     {

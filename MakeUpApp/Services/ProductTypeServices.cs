@@ -1,6 +1,6 @@
 ﻿using MakeUpApp.Data.Repos.IRepos;
 using MakeUpApp.Models;
-using MakeUpApp.Models.DTOs.ProductDTOs;
+using MakeUpApp.Models.DTOs.ProductTypeDTOs;
 using MakeUpApp.Models.ViewModels;
 using MakeUpApp.Services.IServices;
 
@@ -14,7 +14,7 @@ namespace MakeUpApp.Services
         {
             _productTypeRepo = repo;
         }
-        public async Task<bool> AddProductTypeAsync(ProductTypeDTO productType)
+        public async Task<bool> AddProductTypeAsync(ProductTypeCreateDTO productType)
         {
             ProductType newProdType = new ProductType
             {
